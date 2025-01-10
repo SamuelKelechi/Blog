@@ -1,14 +1,68 @@
-import React,{useState} from 'react'
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import '../App.css'
 
 const EditPost = () => {
-  const [title, setTitle] = useState('')
-  const [category, setCategory] = useState('uncategorized')
-  const [description, setDescription] = useState('')
-  const [story, setStory] = useState('')
-  const [avatar, setAvatar] = useState('')
+  const { id } = useParams(); // Get the post ID from the URL
+  const navigate = useNavigate();
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [story, setStory] = useState("");
+  const [image, setImage] = useState(null);
+
+
+
+
+  // Fetch the post data by ID
+  useEffect(() => {
+    fetch(`https://mern-blog-yiff.onrender.com/api/posts/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTitle(data.title);
+        setDescription(data.description);
+        setStory(data.story);
+        setImage(data.avatar); // Handle the image URL
+      })
+      .catch((error) => console.error("Error fetching post:", error));
+  }, [id]);
+
+  // Handle form submission to update the post
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("story", story);
+    if (image instanceof File) {
+      formData.append("avatar", image); // Use "avatar" since the backend expects it
+    }
+
+    try {
+      const response = await fetch(
+        `https://mern-blog-yiff.onrender.com/api/posts/${id}`,
+        {
+          method: "PATCH", // Use PATCH instead of PUT
+          body: formData,
+        }
+      );
+  
+      if (response.ok) {
+        alert("Post updated successfully!");
+        navigate("/");
+      } else {
+        const errorData = await response.json();
+        console.error("Error from server:", errorData);
+        throw new Error("Failed to update post");
+      }
+    } catch (error) {
+      console.error("Error updating post:", error);
+      alert("Failed to update the post. Please try again.");
+    }
+  };
 
   const modules = { 
     toolbar: [
@@ -19,7 +73,6 @@ const EditPost = () => {
       ['clean']
     ],
   }
-  
 
   const formats = [
     'header',
@@ -28,25 +81,26 @@ const EditPost = () => {
     'link', 'image'
   ]
 
-  const Post_Categories = ["Education", "Politics", "Business", "Agriculture", "Entertainment", "Art", "Investment",  "Weather", "Uncategorized"]
 
   return (
     <div className='Create_Post_Contain'>
       <div className='Create_Post_Wwrapper'>
         <h2>Edit Post</h2>
-        <form className='Post_Form'> 
-          <input type='text' value={title} placeholder='Title of Blog' onChange={e => setTitle(e.target.value)} autoFocus/>
-          <select name='category' value={category} onChange={e => setCategory(e.target.value)}>
-            {
-              Post_Categories.map(cat => <option key={cat}>{cat}</option>)
-            }
-          </select>
-          <input type='text' value={description} placeholder='Short Story Description' onChange={e => setDescription(e.target.value)} />  
-          <ReactQuill modules={modules} formats={formats} value={story} onChange={setStory} className='ql_editor'/>
+        <form className='Post_Form' onSubmit={handleSubmit} encType="multipart/form-data"> 
+          <input type='text'  value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required autoFocus/>
+    
+          <input type='text'  value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required />  
           
-          <input type='file' onChange={e => setAvatar(e.target.files[0])} accept='png, jpg, jpeg'/>
+          <ReactQuill modules={modules} formats={formats} value={story} onChange={setStory} required className='ql_editor'/>
+          
+          {/* <input type='file'  accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}/> */}
           <div>
-             <button>Update</button>
+             <button type="submit">Update Post</button>
           </div>
         </form>
       </div>

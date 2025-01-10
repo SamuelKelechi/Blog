@@ -19,7 +19,7 @@
 }
 
 .Header-Right-Container{
-  width: 400px;
+  width: 250px;
   display: flex;
   justify-content: space-around;
 }
@@ -41,85 +41,53 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 30px;
 }
 
 .posts_container{
-  width: 80%;
+  width: 85%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
-
 }
 
 /* Post Item */
 .post_contain{
   display: flex;
-  width: 350px;
-  height: 400px;
-  flex-direction: column;
+  width: 320px;
+  justify-content: center;
   align-items: center;
+  border-radius: 10px;
+  margin: 20px;
+  background-color: rgb(230, 228, 228);
+}
+
+.post_contain_wrapper{
+  height: 95%;
+  width: 95%;
 }
 
 .post_avatar{
-  width: 350px;
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .down_holder{
   width: 100%;
   display: flex;
   justify-content: space-between;
-}
-
-/* SIGN UP */
-.Form_Container{
-  width: 100%;
-  height: 70vh;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
 }
 
-.Form_Container_Wrapper{
+.down_right{
+  width: 80px;
   display: flex;
-  width: 80%;
- justify-content: center;
- align-items: center;
- flex-direction: column;
-}
-
-.Form_Contain{
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  align-items: center;
-}
-
-.Form_Contain input{
-  width: 100%;
-  margin-top: 15px;
-  outline: none;
-}
-
-.Form_Contain button{
-  margin-top: 15px;
-}
-
-/* Dashboard */
-.Dashboard_Container{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.Dashboard_Wrapper{
-  display: flex;
-  flex-direction: column;
-}
-
-.Dashboard_Card{
-  display: flex;
-  width: 500px;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* CraetePost Page */
@@ -147,21 +115,136 @@
 .Post_Form input{
   height: 25px;
   margin-top: 15px;
-}
-
-.Post_Form select{
-  height: 25px;
-  margin-top: 15px;
+  padding: 5px;
 }
 
 .Post_Form button{
   height: 40px;
   width: 120px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.Post_Form button:hover{
+  background-color: #45A049; /* Slightly darker shade for hover effect */
 }
 
 .ql_editor{
   overflow: scroll;
   background: var(--color-white);
-  height: 10rem;
+  height: 12rem;
   margin-top: 10px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  text-align: center;
+}
+
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.confirm-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cancel-button {
+  background-color: #ccc;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.confirm-button:hover {
+  background-color: #e60000;
+}
+
+.cancel-button:hover {
+  background-color: #aaa;
+}
+
+.Detail_Container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.Detail_Container_Wrapper{
+  width: 650px;
+}
+
+.Detail_Image{
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+}
+
+.Detail_Link{
+  padding: 10px 5px 10px 5px;
+  background-color: #4CAF50;
+  text-decoration: none;
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  margin: 20px 0;
+}
+
+@media screen and (max-width: 650px){
+  .Header-Right-Container{
+    width: 150px;
+  }
+  .posts_container{
+    width: 100%;
+  }
+  .post_contain{
+    width: 95%;
+    margin-top: 10px;
+  }
+  .Create_Post_Wwrapper{
+    width: 95%;
+  }
+  .Post_Form{
+    margin-bottom: 20px;
+  }
+  .Detail_Container_Wrapper{
+    width: 95%;
+  }
+  .Detail_Link{
+    padding: 5px 2px 5px 2px;
+    width: 60px;
+  }
 }

@@ -1,0 +1,83 @@
+.Footer-Container {
+    background-color: #171724;
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0 0 0;
+}
+
+.Footer-Logo{
+    width: 150px;
+}
+
+.Footer-Reserved{
+    height: 50px;
+    width: 100%;
+    background-color: #0c0c17;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.Social-Connect-Hold{
+    display: flex;
+    width: 280px;
+    justify-content: space-between;
+    align-items: center;
+    font-family: poppins;
+}
+
+.Social-Connect{
+    width: 180px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.Social-Icon-Each1{
+    width: 18px;
+}
+.Social-Icon-Each2{
+    width: 20px;
+}
+.Social-Icon-Each3{
+    width: 23px;
+}
+.Social-Icon-Each4{
+    width: 30px;
+}
+
+@media screen and (max-width: 650px){
+    .Footer-Name{
+        font-size: 18px;
+    }
+    .Footer-Logo{
+        width: 100px;
+    }
+}
+
+@media screen and (max-width: 420px){
+    .Footer-Reserved{
+        font-size: 14px;
+    }
+    .Footer-Reserved >span{
+        width: 95%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 325px){
+    .Footer-Reserved{
+        font-size: 12px;
+    }
+}
+
+.Footer-Akanbi-Hold{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

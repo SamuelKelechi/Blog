@@ -1,14 +1,59 @@
-import React,{useState} from 'react'
+import React,{useState, useRef} from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import '../App.css'
+import axios from "axios";
 
 const CreatePost = () => {
-  const [title, setTitle] = useState('')
-  const [category, setCategory] = useState('uncategorized')
-  const [description, setDescription] = useState('')
-  const [story, setStory] = useState('')
-  const [avatar, setAvatar] = useState('')
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [story, setStory] = useState("");
+  const [avatar, setAvatar] = useState(null); // File for the avatar
+  const [responseMessage, setResponseMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+
+
+  const handleStoryChange = (value) => {
+    setStory(value); // Update the editor content in state
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("story", story); // Append the content from ReactQuill
+    formData.append("image", avatar); // Append the selected image file
+
+    try {
+      setLoading(true); // Show loading state while request is in progress
+      const response = await fetch("https://mern-blog-yiff.onrender.com/api/posts", {
+        method: "POST",
+        body: formData, // Pass the FormData containing all fields
+      });
+
+      const result = await response.json(); // Parse the JSON response
+      if (response.ok) {
+        setResponseMessage("Post created successfully!");
+        console.log(result); // Log or handle the response
+        setTitle("");  // Reset title field
+        setDescription("");  // Reset description field
+        setStory("");  // Reset Quill story field
+      } else {
+        setResponseMessage("Error: Unable to create post");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setResponseMessage("Error: Unable to create post");
+    } finally {
+      setLoading(false); // Hide loading state
+    }
+  };
+
+
 
   const modules = { 
     toolbar: [
@@ -28,28 +73,37 @@ const CreatePost = () => {
     'link', 'image'
   ]
 
-  const Post_Categories = ["Education", "Politics", "Business", "Agriculture", "Entertainment", "Art", "Investment",  "Weather", "Uncategorized"]
 
   return (
     <div className='Create_Post_Contain'>
       <div className='Create_Post_Wwrapper'>
-        <h2>Create Blog</h2>
-        <p>Error</p>
-        <form className='Post_Form'> 
-          <input type='text' value={title} placeholder='Title of Blog' onChange={e => setTitle(e.target.value)} autoFocus/>
-          <select name='category' value={category} onChange={e => setCategory(e.target.value)}>
-            {
-              Post_Categories.map(cat => <option key={cat}>{cat}</option>)
-            }
-          </select>
-          <input type='text' value={description} placeholder='Short Story Description' onChange={e => setDescription(e.target.value)} />  
-          <ReactQuill modules={modules} formats={formats} value={story} onChange={setStory} className='ql_editor'/>
+        <h1 style={{marginBottom:'-10px'}}>Welcome Admin</h1>
+        <p style={{fontSize:'22px'}}>Create Blog Story</p>
+      {responseMessage && <p style={{color:'green'}}>{responseMessage}</p>}
+
+        <form className='Post_Form' onSubmit={handleSubmit}> 
+          <input type='text' placeholder='Title of Blog' value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required autoFocus/>
+        
+          <input type='text' placeholder='Short Story Description. Max 150 Characters' value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required maxlength="150"/>  
           
-          <input type='file' onChange={e => setAvatar(e.target.files[0])} accept='png, jpg, jpeg'/>
+          <ReactQuill modules={modules} formats={formats}  value={story}
+          onChange={handleStoryChange}
+          required placeholder="Write Your Blog Story Here..." className='ql_editor'/>
+          
+          <input type="file"
+          accept="image/*"
+          onChange={(e) => setAvatar(e.target.files[0])} // Capture the selected file
+          required/>
           <div>
-             <button>Publish</button>
+             <button type="submit">Publish</button>
+             
           </div>
         </form>
+        
       </div>
     </div>
   )

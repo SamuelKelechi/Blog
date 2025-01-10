@@ -9,9 +9,8 @@ const Header = () => {
       <div className='Header-Container-Wrapper'>
         <img src={Logo} alt='Logo' className='Header-Logo'/>
         <div className='Header-Right-Container'>
+          <Link to='/'>Home</Link>
           <Link to='/create'>Create Blog</Link>
-          <Link to='/myposts/:id'>Edit Blog</Link>
-          <Link>Logout</Link>
         </div>
       </div>
     </div>

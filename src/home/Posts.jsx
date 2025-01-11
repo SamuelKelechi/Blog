@@ -57,7 +57,6 @@ const Posts = () => {
       })
       .catch((error) => {
         console.error("Error deleting post:", error);
-        alert("Failed to delete the post. Please try again.");
       })
       .finally(() => {
         setIsModalOpen(false);
@@ -73,8 +72,6 @@ const Posts = () => {
   };
 
 
-
-  
   return (
     <section className='posts'>
       <div className='posts_container'>
@@ -91,8 +88,8 @@ const Posts = () => {
                     
                     <div className='down_holder'>
                         <Link to={`/posts/${_id}`}>Read</Link>
-                        <ShareButton 
-                         post={posts} />
+                        {/* <ShareButton 
+                         postId={_id} /> */}
                         <div className='down_right'>
                           <Link to={`/posts/${_id}/edit`}> Edit </Link>
                           <Link onClick={() => handleDeleteClick(_id)}>Delete</Link>

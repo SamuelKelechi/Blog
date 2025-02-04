@@ -22,7 +22,10 @@ function App() {
   ]);
   return (
     <>
-      <RouterProvider router={router} />
+      {/* <RouterProvider router={router} /> */}
+      <div style={{width:'100%', height:'100vh', display:'flex', justifyContent:'center', alignItems:'center', backgroundColor:'black', color:'white'}}>
+        NOT AVAILABLE
+      </div>
     </>
   );
 }

@@ -8,9 +8,9 @@ import PasswordProtect from "./components/PasswordProtect"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <PasswordProtect> 
+    {/* <PasswordProtect>  */}
       <App />
-    </PasswordProtect>
+    {/* </PasswordProtect> */}
   </React.StrictMode>
 );
 
